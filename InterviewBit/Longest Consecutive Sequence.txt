@@ -1,0 +1,18 @@
+int Solution::longestConsecutive(const vector<int> &a) {
+    int n = a.size();
+    unordered_map<int, int> mp;
+    int length = 1;
+    mp[a[0]] = 1;
+    for(int i=1;i<n;i++)
+    {
+        if(!mp[a[i]]){
+        int left = mp[a[i]-1];
+        int right = mp[a[i]+1];
+        int ans = left + right + 1;
+        length=max(length,ans);
+        mp[a[i]-left]=ans;
+        mp[a[i]+right]=ans;
+        }
+    }
+    return length;
+}
