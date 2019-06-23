@@ -1,0 +1,27 @@
+vector<int> Solution::equal(vector<int> &a) {
+    int n = a.size();
+    unordered_map<int,pair<int, int> > mp;
+    vector<int> ans;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {
+            if(mp.find(a[i]+a[j]) != mp.end())
+            {
+                if(mp[a[i]+a[j]].first != i && mp[a[i]+a[j]].second != i && mp[a[i]+a[j]].first != j && mp[a[i]+a[j]].second != j)
+                {
+                    vector<int> temp = {mp[a[i]+a[j]].first, mp[a[i]+a[j]].second, i, j};
+                    if(ans.size() == 0 || ans > temp)
+                    {
+                        ans = temp;
+                    }
+                }
+            }
+            else 
+            {
+                mp[(a[i]+a[j])] = {i, j};
+            }
+        }
+    }
+    return ans;
+}
