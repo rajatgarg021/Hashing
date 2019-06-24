@@ -1,0 +1,45 @@
+bool ispalin(string s)
+{
+    int n = s.length();
+    for(int i=0;i<n/2;i++)
+    {
+        if(s[i] != s[n-i-1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+vector<vector<int> > Solution::solve(vector<string> &a) {
+    int n = a.size();
+    map<string, int > mp;
+    vector<vector<int>> ans;
+    for(int i=0;i<n;i++)
+        mp[a[i]] = i;
+    
+    for(int i=0;i<n;i++)
+    {
+        
+        string left = "";
+        for(int j=0;j<a[i].length();j++)
+        {
+            left += a[i][j];
+            string right = a[i].substr(j+1);
+            string left_reverse = left;
+            reverse(left_reverse.begin(), left_reverse.end());
+            string right_reverse = right;
+            reverse(right_reverse.begin(), right_reverse.end());
+            if(ispalin(right) && mp.find(left_reverse) != mp.end() && mp[left_reverse] != i)
+            {
+                vector<int> v = {i, mp[left_reverse]};
+                ans.push_back(v);
+            }
+            if(ispalin(left) && mp.find(right_reverse) != mp.end()  && mp[right_reverse] != i)
+            {
+                vector<int> v = {mp[right_reverse], i};
+                ans.push_back(v);
+            }
+        }
+    }
+    return ans;
+}
